@@ -1,0 +1,18 @@
+<mat-grid-list cols="1" rowHeight="6em">
+   <mat-grid-tile>
+     <h2>Red Oak Instruments, LLC</h2>
+   </mat-grid-tile>
+   <mat-grid-tile>
+    <mat-form-field>
+      <input #user (keyup)="0" matInput placeholder="User Name">
+    </mat-form-field>
+   </mat-grid-tile>
+    <mat-grid-tile>
+ <mat-form-field>
+   <input type="password" #pass (keyup)="0" matInput placeholder="Password">
+ </mat-form-field>
+    </mat-grid-tile>
+  <mat-grid-tile>   
+<button (click)="auth.SignIn(user.value, pass.value)" mat-raised-button>Log In</button> 
+  </mat-grid-tile>
+</mat-grid-list>
