@@ -4,9 +4,9 @@ import { LocalPersistenceContext } from './local-persistence-context';
 export class EntitySet {
   
   name: string;
-  idx: {} = {};
+  public idx: {} = {};
   public items: Entity[] = [];
-  newItems: string[] = [];
+  public newItems: string[] = [];
   persistence: LocalPersistenceContext;
 
   constructor(name: string, persistence: LocalPersistenceContext) {
@@ -14,26 +14,29 @@ export class EntitySet {
     this.persistence = persistence;
     this.items = JSON.parse(this.persistence.read(this.name)||"[]");
     this.newItems = JSON.parse(this.persistence.read(this.name+'new')||"[]");
+    this.idx = JSON.parse(this.persistence.read(this.name+'idx')||"{}");
   }
 
   public find(id: string) : Entity {
-    return this.items[id];
+    return this.items[this.idx[id]];
   }
 
   public addOrUpdate(item: Entity) {
-    this.items[item.Id] = item;
+    this.items.push(item);
     this.newItems.push(item.Id);
-
+    this.idx[item.Id] = this.items.length-1;
   }
 
   public save() {
     this.persistence.write(this.name, JSON.stringify(this.items));    
     this.persistence.write(this.name+"new", JSON.stringify(this.newItems));
+    this.persistence.write(this.name+"idx", JSON.stringify(this.idx));
   }
 
   public clear() {
     this.items = [];
     this.newItems = [];
+    this.idx = {};
   }
   
   public getAll() : Entity[] {
@@ -41,6 +44,6 @@ export class EntitySet {
   }
 
   public getUpdates() : Entity[] {
-    return this.newItems.map(key => this.items[key]);
+    return this.newItems.map(key => this.items[this.idx[key]]);
   }
 }

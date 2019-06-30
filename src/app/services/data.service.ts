@@ -38,8 +38,8 @@ export class DataService {
   
     this[name].clear();
     this[name].items = newitems;
-    for(var j =0; j < this[name].items.length; j++) {
-            this[name].idx[j] = this[name].items[j].Id;
+    for(var j = 0; j < this[name].items.length; j++) {
+      this[name].idx[this[name].items[j].Id] = j;
     }
     this[name].save();
   }
@@ -52,7 +52,7 @@ export class DataService {
    
       this.sync.authenticate(serial, info => {
         try {
-         
+          // store device info locally to show company name & etc..
           this.persistence.write("description", JSON.stringify(info));
           this.syncSet("Testers", this.sync, null);
           this.syncSet("Subjects", this.sync, null);

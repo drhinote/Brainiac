@@ -8,8 +8,11 @@ export class AuthGuard implements CanActivate {
   signedIn: any = null;
   router: Router;
 
-
   constructor(router: Router) { this.router = router; }
+
+  public GetUser() {
+    return this.signedIn;
+  }
 
   public SignIn(user: any, password: string) {
     if (user && this.hashPassword(password, user.Id) == user.Password) {
