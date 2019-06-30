@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule, MatAutocompleteModule, MatFormFieldModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule, MatAutocompleteModule} from '@angular/material';
 
 import { AppComponent } from './components/app/app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -21,7 +21,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule, HttpClientModule,MatAutocompleteModule,MatFormFieldModule ],
+  imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule, HttpClientModule,MatAutocompleteModule,ReactiveFormsModule ],
   declarations: [ AppComponent, HomeComponent, LoginComponent, HomeComponent ],
   bootstrap:    [ AppComponent ],
   providers: [AuthGuard, DataService, CordovaService, BrowserPersistenceService, SyncService]
