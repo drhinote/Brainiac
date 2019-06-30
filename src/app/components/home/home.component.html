@@ -1,37 +1,37 @@
-<mat-grid-list cols="4" rowHeight="100px">
-	<mat-grid-tile [colspan]="1" [rowspan]="1">
-		<mat-list>
+<mat-grid-list rowHeight="4:1" cols="4" rows="3">
+	<mat-grid-tile [colspan]="1" [rowspan]="3">
+		<mat-list class='full'>
 			<mat-list-item>
 				<mat-form-field>
-					<input #name (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" matInput placeholder="Name: Last, First MI">
+					<input #name (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" matInput class='full' placeholder="Name: Last, First MI">
         </mat-form-field>
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
-          <input matInput (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" [matDatepicker]="dob" placeholder="Date of Birth">
+          <input matInput (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" class='full' [matDatepicker]="dob" placeholder="Date of Birth">
           <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
           <mat-datepicker #dob></mat-datepicker>
         </mat-form-field>
       </mat-list-item>      
 			<mat-list-item>
 				<mat-form-field>
-					<input #social (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" matInput placeholder="Last 4 of Social">
+					<input #social (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" matInput class='full' placeholder="Last 4 of Social">
         </mat-form-field>
       </mat-list-item>      
 			<mat-list-item>
 				<mat-form-field>
-					<input #opid (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" matInput placeholder="Alternate Id">
+					<input #opid (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" matInput class='full' placeholder="Alternate Id">
         </mat-form-field>
       </mat-list-item>      
 			<mat-list-item>
 				<mat-form-field>
-					<input #uuid (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" matInput placeholder="System Id">
+					<input #uuid (keyup)="sortData(null, name.value, dob.value, social.value, opid.value, uuid.value)" matInput class='full' placeholder="System Id">
         </mat-form-field>
       </mat-list-item>
     </mat-list>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" [rowspan]="1">
-    <table matSort (matSortChange)="sortData($event, name.value, dob.value, social.value, opid.value, uuid.value)">
+  <mat-grid-tile class='full' [colspan]="3" [rowspan]="3">
+    <table matSort class="full" (matSortChange)="sortData($event, name.value, dob.value, social.value, opid.value, uuid.value)">
       <tr>
         <th mat-sort-header="name">Last Name, First Name MI.</th>
         <th mat-sort-header="dob">Date of Birth</th>

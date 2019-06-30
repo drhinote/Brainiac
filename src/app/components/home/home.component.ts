@@ -18,8 +18,12 @@ sort: Sort;
   }
 
   sortData(sort: Sort, name: string, dob: string, social: string, opid: string, uuid: string) {
-    const data = this.data.Subjects.getAll().filter(s => s['Name'].toLowerCase().contains((name||'').toLowerCase()));
+    const data = this.data.Subjects.getAll().filter(s => new String(s['Name']).indexOf(name) >= 0);
     if(sort) this.sort = sort;
+
+    if(!this.sort) {
+       this.sort = { active: "name", direction: 'asc' };
+    }
     
     if (!this.sort.active || this.sort.direction === '') {
       this.sortedData = data;
