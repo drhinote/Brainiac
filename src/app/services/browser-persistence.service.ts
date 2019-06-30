@@ -6,11 +6,11 @@ export class BrowserPersistenceService implements LocalPersistenceContext {
 
   constructor() { }
 
-  write(key: string, value: string) {
+  public write(key: string, value: string) {
     localStorage.setItem(key, value);
   }
 
-  read(key: string) {
+  public read(key: string) {
     return localStorage.getItem(key);
   }
 

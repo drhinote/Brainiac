@@ -18,7 +18,7 @@ export class CordovaService {
     let getWindow = () : any => {
       return window;
     };
-    this.browser = !!(getWindow().cordova);
+    this.browser = !(getWindow().cordova);
   }
 
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Entity } from '../interfaces/entity';
 import { DeviceInfo } from '../interfaces/device-info';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class SyncService {
 
-  baseUrl: string = 'https://redoakdata.azurewebsites.net/';
+  baseUrl: string = 'https://roidata.azurewebsites.net/';
   token: string;
   public info: DeviceInfo;
   http: HttpClient;
@@ -16,7 +16,7 @@ export class SyncService {
   }
 
   public authenticate(serial: string, callback) {
-       this.http.post(this.baseUrl + "jwt/AuthenticateDevice", { Serial: serial }, { headers:  {"Content-Type": "application/json"} }).subscribe((r: DeviceInfo)  => this.info = r.Token?r:this.info, e => { /* iono */ }, () => callback(this.info));
+       this.http.post(this.baseUrl + "jwt/AuthenticateDevice", '{ "Serial": "' + serial + '" }', { headers: new HttpHeaders().append("Content-Type", "application/json") }).subscribe((r: DeviceInfo)  => callback(this.info = r.Token?r:this.info), e => console.log(e));
   }
 
    public post(type: string, newData) {

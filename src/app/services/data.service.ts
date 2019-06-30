@@ -18,6 +18,8 @@ export class DataService {
     if(cordova.isInBrowser()) {
       this.persistence = new BrowserPersistenceService();
       this.persistence.write("serial", "test-1");
+    } else {
+    
     }
     this.testers = new EntitySet("testers", this.persistence);
     this.subjects = new EntitySet("subjects", this.persistence);
@@ -33,8 +35,10 @@ export class DataService {
     }
     let newitems = await sync.get(name);
     this[name].clear();
+    console.log(newitems);
     for(var i in newitems) {
       this[name].addOrUpdate(i);
+      
     }
     this[name].save();
   }
@@ -44,8 +48,10 @@ export class DataService {
     if(!serial) {
       // ask for handset to be plugged in
     }
+   
       this.sync.authenticate(serial, info => {
         try {
+         
           this.persistence.write("description", JSON.stringify(info));
           this.syncSet("testers", this.sync, null);
           this.syncSet("subjects", this.sync, null);
@@ -54,7 +60,7 @@ export class DataService {
             // upload test data to server if it's not == null
           });
         } catch(e) {
-          
+           console.log(e);
         }
     });
   }
