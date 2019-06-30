@@ -24,6 +24,6 @@ const appRoutes: Routes = [
   imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule, HttpClientModule,MatAutocompleteModule,ReactiveFormsModule ],
   declarations: [ AppComponent, HomeComponent, LoginComponent, HomeComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [AuthGuard, DataService, CordovaService, BrowserPersistenceService, SyncService]
+  providers: [AuthGuard, DataService, CordovaService, BrowserPersistenceService, SyncService ]
 })
 export class AppModule { }

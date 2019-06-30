@@ -17,7 +17,7 @@ export class DataService {
   constructor(cordova: CordovaService, sync: SyncService) {
     if(cordova.isInBrowser()) {
       this.persistence = new BrowserPersistenceService();
-      this.persistence.write("serial", "test-1");
+      this.persistence.write("serial", "S-18M-A0067");
     } else {
     
     }

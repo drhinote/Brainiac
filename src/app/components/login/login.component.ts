@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   findUser(name: string) : Entity {
-    return this.options.filter(o => o.Name.toLowerCase().indexOf(name) === 0).pop();
+    return this.options.filter(o => o.Name.toLowerCase().indexOf(name.toLowerCase()) === 0).pop();
   }
 
   displayFn(user?: any): string | undefined {
@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
 
   private _filter(name: string): Entity[] {
     const filterValue = name.toLowerCase();
-
     return this.options.filter(option => option.Name.toLowerCase().indexOf(filterValue) === 0);
   }
 }
