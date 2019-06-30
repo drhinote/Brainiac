@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class HomeComponent implements OnInit {
 
   data: DataService;
+  selected: Entity;
 
   constructor(data: DataService) {
     this.data = data;
@@ -31,6 +32,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.data.Subjects.getAll());
     this.dataSource.sort = this.sort;
+  }
+
+  public selectSubject(subject: Entity) {
+    this.selected = subject;
   }
 }
 
