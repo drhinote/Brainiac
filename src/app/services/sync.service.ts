@@ -19,11 +19,15 @@ export class SyncService {
        this.http.post(this.baseUrl + "jwt/AuthenticateDevice", { Serial: serial }, { headers:  {"Content-Type": "application/json"} }).subscribe((r: DeviceInfo)  => this.info = r.Token?r:this.info, e => { /* iono */ }, () => callback(this.info));
   }
 
-   public post(type: string, newData, callback) {
-     this.http.post(this.baseUrl + type, newData, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe(r => {}, e => callback(false), () => callback(true) );
+   public post(type: string, newData) {
+     return new Promise((o, x) => {
+     this.http.post(this.baseUrl + type, newData, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe(r => {}, e => x(), () => o() );
+     });
    }
 
-   public get(type: string, callback) {
-          this.http.get(this.baseUrl + type, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe((r: any) => callback(r.value), e => callback(null) );
+   public get(type: string) : Promise<Entity[]> {
+      return new Promise((o, x) => {
+          this.http.get(this.baseUrl + type, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe((r: any) => o(r.value), e => x(null) );
+      });
    }
 }

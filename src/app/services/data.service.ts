@@ -26,32 +26,32 @@ export class DataService implements OnInit {
     this.synchronizeAllData();
   }
 
-  syncSet(name: string, sync: SyncService, extraAction: Function) {
+  async syncSet(name: string, sync: SyncService, extraAction: Function) {
    for(var i in this[name].getUpdates()) {
-      sync.post(name, i);
+      await sync.post(name, i);
       if(extraAction) extraAction(i);
     }
     this[name].clear();
-    for(var i in sync.get(name)) {
+    for(var i in await sync.get(name)) {
       this[name].addOrUpdate(i);
     }
     this[name].save();
   }
 
-  public synchronizeAllData() {
-    try {
+  public synchronizeAllData() { 
       this.sync.authenticate(this.persistence.read("serial"), info => {
-      this.persistence.write("description", JSON.stringify(info));
-      this.syncSet("testers", this.sync, null);
-      this.syncSet("subjects", this.sync, null);
-      this.syncSet("tests", this.sync, t => {
-        var data = this.getTestBinary(t);
-        // upload test data to server if it's not == null
-      });
+        try {
+        this.persistence.write("description", JSON.stringify(info));
+        this.syncSet("testers", this.sync, null);
+        this.syncSet("subjects", this.sync, null);
+        this.syncSet("tests", this.sync, t => {
+          var data = this.getTestBinary(t);
+          // upload test data to server if it's not == null
+        });
+        } catch(e) {
+          
+        }
     });
-    } catch(e) {
-      // iono
-    }
   }
 
   public storeTest(testData: any) {
