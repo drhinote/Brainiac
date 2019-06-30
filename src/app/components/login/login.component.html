@@ -4,10 +4,10 @@
 	</mat-grid-tile>
 	<mat-grid-tile>
 		<mat-form-field>
-			<input #user matInput placeholder="User Name" [formControl]="form" [matAutocomplete]="auto"  >
+			<input #user matInput placeholder="User Name" [formControl]="form" [matAutocomplete]="auto">
     </mat-form-field>
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.Name">{{option.Name}}</mat-option>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option.Name}}</mat-option>
     </mat-autocomplete>
    </mat-grid-tile>
     <mat-grid-tile>
@@ -16,6 +16,6 @@
  </mat-form-field>
     </mat-grid-tile>
   <mat-grid-tile>   
-<button (click)="auth.SignIn(user.value, pass.value)" mat-raised-button>Log In</button> 
+<button (click)="auth.SignIn(findUser(user.value), pass.value)" mat-raised-button>Log In</button> 
   </mat-grid-tile>
 </mat-grid-list>
