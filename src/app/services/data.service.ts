@@ -31,8 +31,9 @@ export class DataService implements OnInit {
       await sync.post(name, i);
       if(extraAction) extraAction(i);
     }
+    let newitems = await sync.get(name);
     this[name].clear();
-    for(var i in await sync.get(name)) {
+    for(var i in newitems) {
       this[name].addOrUpdate(i);
     }
     this[name].save();
@@ -41,13 +42,13 @@ export class DataService implements OnInit {
   public synchronizeAllData() { 
       this.sync.authenticate(this.persistence.read("serial"), info => {
         try {
-        this.persistence.write("description", JSON.stringify(info));
-        this.syncSet("testers", this.sync, null);
-        this.syncSet("subjects", this.sync, null);
-        this.syncSet("tests", this.sync, t => {
-          var data = this.getTestBinary(t);
-          // upload test data to server if it's not == null
-        });
+          this.persistence.write("description", JSON.stringify(info));
+          this.syncSet("testers", this.sync, null);
+          this.syncSet("subjects", this.sync, null);
+          this.syncSet("tests", this.sync, t => {
+            var data = this.getTestBinary(t);
+            // upload test data to server if it's not == null
+          });
         } catch(e) {
           
         }

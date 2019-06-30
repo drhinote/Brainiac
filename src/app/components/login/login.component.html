@@ -1,11 +1,14 @@
 <mat-grid-list cols="1" rowHeight="6em">
-   <mat-grid-tile>
-     <h2>Red Oak Instruments, LLC</h2>
-   </mat-grid-tile>
-   <mat-grid-tile>
-    <mat-form-field>
-      <input #user (keyup)="0" matInput placeholder="User Name">
+	<mat-grid-tile>
+		<h2>Red Oak Instruments, LLC</h2>
+	</mat-grid-tile>
+	<mat-grid-tile>
+		<mat-form-field>
+			<input #user (keyup)="0" matInput placeholder="User Name" [matAutocomplete]="auto"  >
     </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of data.testers.getAll()" [value]="option">{{option.Name}}</mat-option>
+    </mat-autocomplete>
    </mat-grid-tile>
     <mat-grid-tile>
  <mat-form-field>
