@@ -19,6 +19,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.options = this.data.testers.getAll();
+    this.options = this.data.Testers.getAll();
   }
 }

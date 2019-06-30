@@ -7,7 +7,7 @@
 			<input #user (keyup)="0" matInput placeholder="User Name" [matAutocomplete]="auto"  >
     </mat-form-field>
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of options" [value]="option">{{option.Name}}</mat-option>
+      <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
     </mat-autocomplete>
    </mat-grid-tile>
     <mat-grid-tile>

@@ -10,9 +10,9 @@ import { DeviceInfo } from '../interfaces/device-info';
 @Injectable()
 export class DataService {
   persistence: LocalPersistenceContext;
-  public testers: EntitySet;
-  public subjects: EntitySet;
-  public tests: EntitySet;
+  public Testers: EntitySet;
+  public Subjects: EntitySet;
+  public Tests: EntitySet;
   sync: SyncService;
   constructor(cordova: CordovaService, sync: SyncService) {
     if(cordova.isInBrowser()) {
@@ -21,23 +21,23 @@ export class DataService {
     } else {
     
     }
-    this.testers = new EntitySet("testers", this.persistence);
-    this.subjects = new EntitySet("subjects", this.persistence);
-    this.tests = new EntitySet("tests", this.persistence);
+    this.Testers = new EntitySet("Testers", this.persistence);
+    this.Subjects = new EntitySet("Subjects", this.persistence);
+    this.Tests = new EntitySet("Tests", this.persistence);
     this.sync = sync;
     this.synchronizeAllData();
   }
 
   async syncSet(name: string, sync: SyncService, extraAction: Function) {
-   for(var i in this[name].getUpdates()) {
-      await sync.post(name, i);
+    let updates = this[name].getUpdates();
+    for(var i =0; i < updates.length; i++) {
+      await sync.post(name, this[name].find(updates[i]));
       if(extraAction) extraAction(i);
     }
     let newitems = await sync.get(name);
     this[name].clear();
-    console.log(newitems);
-    for(var i in newitems) {
-      this[name].addOrUpdate(i);
+    for(var j =0; j < newitems.length; j++) {
+      this[name].addOrUpdate(newitems[i]);
       
     }
     this[name].save();
@@ -53,9 +53,9 @@ export class DataService {
         try {
          
           this.persistence.write("description", JSON.stringify(info));
-          this.syncSet("testers", this.sync, null);
-          this.syncSet("subjects", this.sync, null);
-          this.syncSet("tests", this.sync, t => {
+          this.syncSet("Testers", this.sync, null);
+          this.syncSet("Subjects", this.sync, null);
+          this.syncSet("Tests", this.sync, t => {
             var data = this.getTestBinary(t);
             // upload test data to server if it's not == null
           });

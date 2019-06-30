@@ -6,7 +6,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class SyncService {
 
-  baseUrl: string = 'https://roidata.azurewebsites.net/';
   token: string;
   public info: DeviceInfo;
   http: HttpClient;
@@ -16,18 +15,22 @@ export class SyncService {
   }
 
   public authenticate(serial: string, callback) {
-       this.http.post(this.baseUrl + "jwt/AuthenticateDevice", '{ "Serial": "' + serial + '" }', { headers: new HttpHeaders().append("Content-Type", "application/json") }).subscribe((r: DeviceInfo)  => callback(this.info = r.Token?r:this.info), e => console.log(e));
+       this.http.post('https://roidata.azurewebsites.net/' + "jwt/AuthenticateDevice", '{ "Serial": "' + serial + '" }', { headers: new HttpHeaders().append("Content-Type", "application/json") }).subscribe((r: DeviceInfo)  => callback(this.info = r.Token?r:this.info), e => console.log(e));
   }
 
    public post(type: string, newData) {
      return new Promise((o, x) => {
-     this.http.post(this.baseUrl + type, newData, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe(r => {}, e => x(), () => o() );
+       try {
+     this.http.post('https://roidata.azurewebsites.net/' + type, newData, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe(r => {}, e => x(), () => o() );
+       } catch(ex) { console.log(ex); }
      });
    }
 
    public get(type: string) : Promise<Entity[]> {
       return new Promise((o, x) => {
-          this.http.get(this.baseUrl + type, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe((r: any) => o(r.value), e => x(null) );
+        try {
+          this.http.get('https://roidata.azurewebsites.net/' + type, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe((r: any) => o(r.value), e => x(null) );
+        } catch(ex) { console.log(ex); }
       });
    }
 }
