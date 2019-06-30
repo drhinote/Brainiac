@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Entity } from '../interfaces/entity';
-
+import { DeviceInfo } from '../interfaces/device-info'
 @Injectable()
 export class SyncService {
 
@@ -8,6 +8,10 @@ export class SyncService {
   
   constructor() {
   
+  }
+
+  public authenticate(serial: string) : DeviceInfo {
+    return null;
   }
 
    public post(type: string, newData) {

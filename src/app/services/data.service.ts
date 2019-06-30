@@ -5,6 +5,7 @@ import { BrowserPersistenceService } from './browser-persistence.service';
 import { Entity } from '../interfaces/entity';
 import { EntitySet } from '../interfaces/entity-set';
 import { SyncService } from './sync.service';
+import { DeviceInfo } from '../interfaces/device-info';
 
 @Injectable()
 export class DataService implements OnInit {
@@ -15,30 +16,41 @@ export class DataService implements OnInit {
   
   constructor(cordova: CordovaService) {
     this.persistence = cordova.isInBrowser()?new BrowserPersistenceService():null; 
-    this.testers = new EntitySet("testers");
-    this.subjects = new EntitySet("subjects");
-    this.tests = new EntitySet("tests");
+    this.testers = new EntitySet("testers", this.persistence);
+    this.subjects = new EntitySet("subjects", this.persistence);
+    this.tests = new EntitySet("tests", this.persistence);
   }
 
   ngOnInit() {
     this.synchronizeAllData();
   }
 
-  public synchronizeAllData() {
-    var sync: SyncService = new SyncService();
-    for(var i in this.testers.getNew()) {
-      sync.post("testers", i);
+  syncSet(name: string, sync: SyncService, extraAction: Function) {
+   for(var i in this[name].getUpdates()) {
+      sync.post(name, i);
+      if(extraAction) extraAction(i);
     }
-    this.testers.clear();
-    for(var i in sync.get("testers")) {
-      
+    this[name].clear();
+    for(var i in sync.get(name)) {
+      this[name].addOrUpdate(i);
     }
-    for(var i in this.subjects.getNew()) {
-      sync.post("subjects", i);
-    }
+    this[name].save();
+  }
 
-    for(var i in this.tests.getNew()) {
-      sync.post("tests", i);
+  public synchronizeAllData() {
+    try {
+      var sync: SyncService = new SyncService();
+      var info: DeviceInfo = sync.authenticate(this.persistence.read("serial"));
+      if(info == null) return;
+      this.persistence.write("description", JSON.stringify(info));
+      this.syncSet("testers", sync, null);
+      this.syncSet("subjects", sync, null);
+      this.syncSet("tests", sync, t => {
+        var data = this.getTestBinary(t);
+        // upload test data to server if it's not == null
+      });
+    } catch(e) {
+      // iono
     }
   }
 
