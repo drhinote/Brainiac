@@ -16,6 +16,10 @@ export class EntitySet {
   public addOrUpdate(item: Entity) {
 
   }
+
+  public clear() {
+    
+  }
   
   public getAll() : Entity[] {
     return null;

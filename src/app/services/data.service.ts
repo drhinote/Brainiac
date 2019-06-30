@@ -12,14 +12,12 @@ export class DataService implements OnInit {
   public testers: EntitySet;
   public subjects: EntitySet;
   public tests: EntitySet;
-  sync: SyncService;
-
-  constructor(cordova: CordovaService, sync: SyncService) {
+  
+  constructor(cordova: CordovaService) {
     this.persistence = cordova.isInBrowser()?new BrowserPersistenceService():null; 
     this.testers = new EntitySet("testers");
     this.subjects = new EntitySet("subjects");
     this.tests = new EntitySet("tests");
-    this.sync = sync;
   }
 
   ngOnInit() {
@@ -27,7 +25,21 @@ export class DataService implements OnInit {
   }
 
   public synchronizeAllData() {
-    
+    var sync: SyncService = new SyncService();
+    for(var i in this.testers.getNew()) {
+      sync.post("testers", i);
+    }
+    this.testers.clear();
+    for(var i in sync.get("testers")) {
+      
+    }
+    for(var i in this.subjects.getNew()) {
+      sync.post("subjects", i);
+    }
+
+    for(var i in this.tests.getNew()) {
+      sync.post("tests", i);
+    }
   }
 
   public storeTest(testData: any) {

@@ -10,7 +10,7 @@ export class SyncService {
   
   }
 
-   public post(type: string, newData: Entity) {
+   public post(type: string, newData) {
 
    }
 
