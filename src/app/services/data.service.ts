@@ -37,8 +37,7 @@ export class DataService {
     let newitems = await sync.get(name);
     this[name].clear();
     for(var j =0; j < newitems.length; j++) {
-      this[name].addOrUpdate(newitems[i]);
-      
+      this[name].items[newitems[i].Id] = newitems[i];      
     }
     this[name].save();
   }

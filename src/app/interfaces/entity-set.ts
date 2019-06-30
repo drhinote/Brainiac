@@ -4,7 +4,7 @@ import { LocalPersistenceContext } from './local-persistence-context';
 export class EntitySet {
   
   name: string;
-  items: {};
+  public items: {};
   newItems: string[];
   persistence: LocalPersistenceContext;
 
