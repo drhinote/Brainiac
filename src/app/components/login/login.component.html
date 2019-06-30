@@ -12,10 +12,10 @@
    </mat-grid-tile>
     <mat-grid-tile>
  <mat-form-field>
-   <input type="password" #pass (keyup)="0" matInput placeholder="Password">
+   <input type="password" #pass (keyup)="auth.SignIn(findUser(user.value), pass.value)" matInput placeholder="Password">
  </mat-form-field>
     </mat-grid-tile>
   <mat-grid-tile>   
-<button (click)="auth.SignIn(findUser(user.value), pass.value)" mat-raised-button>Log In</button> 
+<button (click)="auth.SignIn(findUser(user.value), pass.value)" color="primary" mat-raised-button>Log In</button> 
   </mat-grid-tile>
 </mat-grid-list>
