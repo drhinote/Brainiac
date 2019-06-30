@@ -13,12 +13,13 @@ export class DataService implements OnInit {
   public testers: EntitySet;
   public subjects: EntitySet;
   public tests: EntitySet;
-  
-  constructor(cordova: CordovaService) {
+  sync: SyncService;
+  constructor(cordova: CordovaService, sync: SyncService) {
     this.persistence = cordova.isInBrowser()?new BrowserPersistenceService():null; 
     this.testers = new EntitySet("testers", this.persistence);
     this.subjects = new EntitySet("subjects", this.persistence);
     this.tests = new EntitySet("tests", this.persistence);
+    this.sync = sync;
   }
 
   ngOnInit() {
@@ -39,16 +40,15 @@ export class DataService implements OnInit {
 
   public synchronizeAllData() {
     try {
-      var sync: SyncService = new SyncService();
-      var info: DeviceInfo = sync.authenticate(this.persistence.read("serial"));
-      if(info == null) return;
+      this.sync.authenticate(this.persistence.read("serial"), info => {
       this.persistence.write("description", JSON.stringify(info));
-      this.syncSet("testers", sync, null);
-      this.syncSet("subjects", sync, null);
-      this.syncSet("tests", sync, t => {
+      this.syncSet("testers", this.sync, null);
+      this.syncSet("subjects", this.sync, null);
+      this.syncSet("tests", this.sync, t => {
         var data = this.getTestBinary(t);
         // upload test data to server if it's not == null
       });
+    });
     } catch(e) {
       // iono
     }

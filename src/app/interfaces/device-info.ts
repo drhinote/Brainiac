@@ -3,4 +3,5 @@ export class DeviceInfo {
   public CompanyName: string;
   public CompaanyId: string;
   public Token: string;
+	public $id: number;
 }
