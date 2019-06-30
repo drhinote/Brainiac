@@ -4,8 +4,8 @@ import { LocalPersistenceContext } from './local-persistence-context';
 export class EntitySet {
   
   name: string;
-  public items: {};
-  newItems: string[];
+  public items = {};
+  newItems: string[] = [];
   persistence: LocalPersistenceContext;
 
   constructor(name: string, persistence: LocalPersistenceContext) {
