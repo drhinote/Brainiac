@@ -11,7 +11,7 @@ import { DataService } from '../../services/data.service';
 export class LoginComponent implements OnInit {
    auth: AuthGuard;
    data: DataService;
-  options: any[];
+  public options: any[];
   constructor(auth: AuthGuard, data: DataService)
   {
     this.auth = auth;

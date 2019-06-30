@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CordovaService } from './cordova.service';
 import { LocalPersistenceContext } from '../interfaces/local-persistence-context';
 import { BrowserPersistenceService } from './browser-persistence.service';
@@ -8,21 +8,21 @@ import { SyncService } from './sync.service';
 import { DeviceInfo } from '../interfaces/device-info';
 
 @Injectable()
-export class DataService implements OnInit {
+export class DataService {
   persistence: LocalPersistenceContext;
   public testers: EntitySet;
   public subjects: EntitySet;
   public tests: EntitySet;
   sync: SyncService;
   constructor(cordova: CordovaService, sync: SyncService) {
-    this.persistence = cordova.isInBrowser()?new BrowserPersistenceService():null; 
+    if(cordova.isInBrowser()) {
+      this.persistence = new BrowserPersistenceService();
+      this.persistence.write("serial", "test-1");
+    }
     this.testers = new EntitySet("testers", this.persistence);
     this.subjects = new EntitySet("subjects", this.persistence);
     this.tests = new EntitySet("tests", this.persistence);
     this.sync = sync;
-  }
-
-  ngOnInit() {
     this.synchronizeAllData();
   }
 
@@ -39,8 +39,12 @@ export class DataService implements OnInit {
     this[name].save();
   }
 
-  public synchronizeAllData() { 
-      this.sync.authenticate(this.persistence.read("serial"), info => {
+  public synchronizeAllData() {
+    let serial = this.persistence.read("serial"); 
+    if(!serial) {
+      // ask for handset to be plugged in
+    }
+      this.sync.authenticate(serial, info => {
         try {
           this.persistence.write("description", JSON.stringify(info));
           this.syncSet("testers", this.sync, null);
