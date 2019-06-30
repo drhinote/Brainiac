@@ -9,6 +9,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth.guard';
+import { DataService } from './data.service';
+import { CordovaService } from './cordova.service';
+import { LocalStoragePersistenceService } from './local-storage-persistence.service';
+import { SyncService } from './services/sync.service';
 
 const appRoutes: Routes = [  
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
@@ -19,6 +23,6 @@ const appRoutes: Routes = [
   imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule ],
   declarations: [ AppComponent, HomeComponent, LoginComponent, HomeComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [AuthGuard]
+  providers: [AuthGuard, DataService, CordovaService, LocalStoragePersistenceService, SyncService]
 })
 export class AppModule { }
