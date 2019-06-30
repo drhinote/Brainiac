@@ -4,14 +4,15 @@ import { LocalPersistenceContext } from './local-persistence-context';
 export class EntitySet {
   
   name: string;
-  public items = {};
+  idx: {} = {};
+  public items: Entity[] = [];
   newItems: string[] = [];
   persistence: LocalPersistenceContext;
 
   constructor(name: string, persistence: LocalPersistenceContext) {
     this.name = name;
     this.persistence = persistence;
-    this.items = JSON.parse(this.persistence.read(this.name)||"{}");
+    this.items = JSON.parse(this.persistence.read(this.name)||"[]");
     this.newItems = JSON.parse(this.persistence.read(this.name+'new')||"[]");
   }
 
@@ -31,12 +32,12 @@ export class EntitySet {
   }
 
   public clear() {
-    this.items = {};
+    this.items = [];
     this.newItems = [];
   }
   
   public getAll() : Entity[] {
-    return Object.keys(this.items).map(key => this.items[key]);
+    return this.items;
   }
 
   public getUpdates() : Entity[] {

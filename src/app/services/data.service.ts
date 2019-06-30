@@ -35,9 +35,11 @@ export class DataService {
       if(extraAction) extraAction(i);
     }
     let newitems = await sync.get(name);
+    console.log(newitems);
     this[name].clear();
-    for(var j =0; j < newitems.length; j++) {
-      this[name].items[newitems[i].Id] = newitems[i];      
+    this[name].items = newitems;
+    for(var j =0; j < this[name].items.length; j++) {
+            this[name].idx[j] = this[name].items[j].Id;
     }
     this[name].save();
   }

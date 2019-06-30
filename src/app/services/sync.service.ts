@@ -5,8 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class SyncService {
-
-  token: string;
+  
   public info: DeviceInfo;
   http: HttpClient;
 
@@ -30,7 +29,7 @@ export class SyncService {
    public get(type: string) : Promise<Entity[]> {
       return new Promise((o, x) => {
         try {
-          this.http.get('https://roidata.azurewebsites.net/' + type, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe((r: any) => o(r.value), e => { console.log(type); x(null); } );
+          this.http.get('https://roidata.azurewebsites.net/' + type, { headers: {"Content-Type": "application/json", "Authorization": "Bearer " + this.info.Token } }).subscribe((r: any) => o(r['value']), e => { console.log(type); x(null); } );
         } catch(ex) { console.log(ex); }
       });
    }
