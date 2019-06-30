@@ -1,10 +1,10 @@
 import { Injectable, OnInit } from '@angular/core';
 import { CordovaService } from './cordova.service';
-import { LocalPersistenceContext } from './local-persistence-context';
+import { LocalPersistenceContext } from '../interfaces/local-persistence-context';
 import { LocalStoragePersistenceService } from './local-storage-persistence.service';
-import { Entity } from './entity';
-import { EntitySet } from './entity-set';
-import { SyncService } from './services/sync.service';
+import { Entity } from '../interfaces/entity';
+import { EntitySet } from '../interfaces/entity-set';
+import { SyncService } from './sync.service';
 
 @Injectable()
 export class DataService implements OnInit {

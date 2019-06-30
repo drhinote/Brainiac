@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthGuard } from '../auth.guard';
-import { DataService } from '../data.service';
+import { AuthGuard } from '../services/auth.guard';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-login',

@@ -8,10 +8,10 @@ import {MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule} f
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { AuthGuard } from './auth.guard';
-import { DataService } from './data.service';
-import { CordovaService } from './cordova.service';
-import { LocalStoragePersistenceService } from './local-storage-persistence.service';
+import { AuthGuard } from './services/auth.guard';
+import { DataService } from './services/data.service';
+import { CordovaService } from './services/cordova.service';
+import { LocalStoragePersistenceService } from './services/local-storage-persistence.service';
 import { SyncService } from './services/sync.service';
 
 const appRoutes: Routes = [  
