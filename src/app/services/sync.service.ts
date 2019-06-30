@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Entity } from '../entity';
+import { Entity } from '../interfaces/entity';
 
 @Injectable()
 export class SyncService {

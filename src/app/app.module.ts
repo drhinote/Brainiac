@@ -5,13 +5,13 @@ import { RouterModule, Routes, ActivatedRouteSnapshot, RouterStateSnapshot } fro
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule} from '@angular/material';
 
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
+import { AppComponent } from './components/app/app.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './services/auth.guard';
 import { DataService } from './services/data.service';
 import { CordovaService } from './services/cordova.service';
-import { LocalStoragePersistenceService } from './services/local-storage-persistence.service';
+import { BrowserPersistenceService } from './services/browser-persistence.service';
 import { SyncService } from './services/sync.service';
 
 const appRoutes: Routes = [  
@@ -23,6 +23,6 @@ const appRoutes: Routes = [
   imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule ],
   declarations: [ AppComponent, HomeComponent, LoginComponent, HomeComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [AuthGuard, DataService, CordovaService, LocalStoragePersistenceService, SyncService]
+  providers: [AuthGuard, DataService, CordovaService, BrowserPersistenceService, SyncService]
 })
 export class AppModule { }

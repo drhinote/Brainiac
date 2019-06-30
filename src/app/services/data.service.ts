@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { CordovaService } from './cordova.service';
 import { LocalPersistenceContext } from '../interfaces/local-persistence-context';
-import { LocalStoragePersistenceService } from './local-storage-persistence.service';
+import { BrowserPersistenceService } from './browser-persistence.service';
 import { Entity } from '../interfaces/entity';
 import { EntitySet } from '../interfaces/entity-set';
 import { SyncService } from './sync.service';
@@ -15,7 +15,7 @@ export class DataService implements OnInit {
   sync: SyncService;
 
   constructor(cordova: CordovaService, sync: SyncService) {
-    this.persistence = cordova.isInBrowser()?new LocalStoragePersistenceService():null; 
+    this.persistence = cordova.isInBrowser()?new BrowserPersistenceService():null; 
     this.testers = new EntitySet("testers");
     this.subjects = new EntitySet("subjects");
     this.tests = new EntitySet("tests");
@@ -27,7 +27,7 @@ export class DataService implements OnInit {
   }
 
   public synchronizeAllData() {
-    //Get token if possible, ask to plug in handset it it's not
+    
   }
 
   public storeTest(testData: any) {

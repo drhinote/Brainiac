@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { LocalPersistenceContext } from './local-persistence-context';
+import { LocalPersistenceContext } from '../interfaces/local-persistence-context';
 
 @Injectable()
-export class LocalStoragePersistenceService implements LocalPersistenceContext {
+export class BrowserPersistenceService implements LocalPersistenceContext {
 
   constructor() { }
 
