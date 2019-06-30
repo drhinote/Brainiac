@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatListModule, MatSortModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatListModule, MatSortModule, MatTableModule, MatCardModule } from '@angular/material';
 
 import { AppComponent } from './components/app/app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -21,7 +21,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule, HttpClientModule,MatAutocompleteModule,ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, MatListModule, MatSortModule ],
+  imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatGridListModule, HttpClientModule,MatAutocompleteModule,ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, MatListModule, MatSortModule, MatTableModule, MatCardModule ],
   declarations: [ AppComponent, HomeComponent, LoginComponent, HomeComponent ],
   bootstrap:    [ AppComponent ],
   providers: [AuthGuard, DataService, CordovaService, BrowserPersistenceService, SyncService ]
