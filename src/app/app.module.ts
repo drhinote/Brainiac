@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +22,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, HttpClientModule, ReactiveFormsModule, MaterialModule ],
+  imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, HttpClientModule, ReactiveFormsModule, MaterialModule, CommonModule ],
   declarations: [ AppComponent, HomeComponent, LoginComponent, HomeComponent ],
   bootstrap:    [ AppComponent ],
   providers: [AuthGuard, DataService, CordovaService, BrowserPersistenceService, SyncService ]
