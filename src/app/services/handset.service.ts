@@ -62,6 +62,7 @@ export class HandsetService {
                                 this.handset.thumb.loadPercent = this.toPercent(tt, length, this.handset.thumb);
                                 this.handset.index.loadPercent = this.toPercent(ti, length, this.handset.index);
                                 this.handset.pinky.loadPercent = this.toPercent(tp, length, this.handset.pinky);
+                                this.dataAvailable(this.handset);
                             }
 
                         }
