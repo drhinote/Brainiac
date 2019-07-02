@@ -20,13 +20,10 @@ export class CordovaService {
     let getWindow = () : any => {
       return window;
     };
-    this.native = getWindow().cordova;
-    this.browser = !(this.native);
-    if(this.browser) {
-      this.native = {
+    this.native = getWindow().cordova || {
         serial: new FakeSerialService()
       };
-    }
+    this.browser = !(getWindow().cordova);
   }
 
 }

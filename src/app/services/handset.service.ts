@@ -1,14 +1,13 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, Output, EventEmitter, OnInit } from '@angular/core';
 import { CordovaService } from './cordova.service';
 
 @Injectable()
-export class HandsetService {
+export class HandsetService implements OnInit {
 
   public cordova: CordovaService;
 
   constructor(cordova: CordovaService) {
     this.cordova = cordova;
-    this.init();
   }
 
   @Output() indexPct = new EventEmitter<Number>();
@@ -22,12 +21,12 @@ export class HandsetService {
   @Output() connected = new EventEmitter<any>();
   
   @Output() disconnected = new EventEmitter<any>();
-  
+
   ping() {
-    this.cordova.native.serial.writeHex("AA0300002940", () => setTimeout(this.ping, 60), () => setTimeout(this.init, 1000));
+    this.cordova.native.serial.writeHex("AA0300002940", this.ping, () => setTimeout(this.ngOnInit, 1000));
   }
   
-  init() {
+  ngOnInit() {
         this.cordova.native.serial.requestPermission(() => {
             this.cordova.native.serial.open({ baudRate: 460800 }, () => {
                 this.cordova.native.serial.registerReadCallback(
@@ -76,13 +75,13 @@ export class HandsetService {
                             }
 
                         }
-                    }, () => setTimeout(this.init, 1000));
-                this.cordova.native.serial.writeHex("AA0200008B2A", this.ping, () => setTimeout(this.init, 1000));
+                    }, () => setTimeout(this.ngOnInit, 1000));
+                this.cordova.native.serial.writeHex("AA0200008B2A", this.ping, () => setTimeout(this.ngOnInit, 1000));
             }, () => {
-                setTimeout(this.init, 1000);
+                setTimeout(this.ngOnInit, 1000);
             });
         }, () => {
-            setTimeout(this.init, 1000);
+            setTimeout(this.ngOnInit, 1000);
         });
     };
 
