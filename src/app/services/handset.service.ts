@@ -16,10 +16,6 @@ export class HandsetService {
   public thumbPct: number;
   
   public pinkyPct: number;
-
-  ping() {
-    this.cordova.native.serial.writeHex("AA0300002940", this.ping, () => setTimeout(this.init, 1000));
-  }
   
   init() {
         this.cordova.native.serial.requestPermission(() => {
@@ -67,7 +63,8 @@ export class HandsetService {
 
                         }
                     }, () => setTimeout(this.init, 1000));
-                this.cordova.native.serial.writeHex("AA0200008B2A", this.ping, () => setTimeout(this.init, 1000));
+                this.cordova.native.serial.writeHex("AA0200008B2A", () => {}, () => setTimeout(this.init, 1000));
+                setInterval(this.cordova.native.serial.writeHex("AA0300002940", () => {}, () => setTimeout(this.init, 1000)), 20);
             }, () => {
                 setTimeout(this.init, 1000);
             });
