@@ -23,6 +23,7 @@ export class CordovaService {
     this.native = getWindow().cordova || {
         serial: new FakeSerialService()
       };
+     
     this.browser = !(getWindow().cordova);
   }
 

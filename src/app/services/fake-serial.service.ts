@@ -1,6 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class FakeSerialService {
    idx: 0;
   constructor() { }
@@ -15,7 +12,7 @@ export class FakeSerialService {
       this.idx++;
       if(this.idx >= this.samples.length) this.idx = 0;
     }
-    onSuccess();
+    setTimeout(onSuccess);
   }
 
   requestPermission(onSuccess: Function, onFail: Function) {

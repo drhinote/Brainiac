@@ -1,32 +1,27 @@
-import { Injectable, Output, EventEmitter, OnInit } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { CordovaService } from './cordova.service';
+import {Observable} from 'rxjs';
 
 @Injectable()
-export class HandsetService implements OnInit {
+export class HandsetService {
 
-  public cordova: CordovaService;
+  cordova: CordovaService;
 
-  constructor(cordova: CordovaService) {
-    this.cordova = cordova;
+  constructor() {
+    this.cordova = new CordovaService();
   }
 
-  @Output() indexPct = new EventEmitter<Number>();
+  public indexPct: number; 
   
-  @Output() thumbPct = new EventEmitter<Number>();
+  public thumbPct: number;
   
-  @Output() pinkyPct = new EventEmitter<Number>();
-
-  @Output() dataAvailable = new EventEmitter<any>();
-  
-  @Output() connected = new EventEmitter<any>();
-  
-  @Output() disconnected = new EventEmitter<any>();
+  public pinkyPct: number;
 
   ping() {
-    this.cordova.native.serial.writeHex("AA0300002940", this.ping, () => setTimeout(this.ngOnInit, 1000));
+    this.cordova.native.serial.writeHex("AA0300002940", this.ping, () => setTimeout(this.init, 1000));
   }
   
-  ngOnInit() {
+  init() {
         this.cordova.native.serial.requestPermission(() => {
             this.cordova.native.serial.open({ baudRate: 460800 }, () => {
                 this.cordova.native.serial.registerReadCallback(
@@ -43,7 +38,6 @@ export class HandsetService implements OnInit {
                                         t += String.fromCharCode(view[j]);
                                     this.handset.serial = t;
                                 }
-                                this.connected(this.handset);
                             }
                         }
                         if (view[1] === 3) {
@@ -65,23 +59,20 @@ export class HandsetService implements OnInit {
                                     this.addSample(ps, this.handset.pinky);
                                 }
 
-                                this.handset.thumb.loadPercent = this.toPercent(tt, length, this.handset.thumb);
-                                this.handset.index.loadPercent = this.toPercent(ti, length, this.handset.index);
-                                this.handset.pinky.loadPercent = this.toPercent(tp, length, this.handset.pinky);
-                                this.dataAvailable(this.handset);
-                                this.indexPct(this.handset.index.loadPercent);
-                                this.thumbPct(this.handset.thumb.loadPercent);
-                                this.pinkyPct(this.handset.pinky.loadPercent);
+                                this.thumbPct = this.handset.thumb.loadPercent = this.toPercent(tt, length, this.handset.thumb);
+                                this.indexPct = this.handset.index.loadPercent = this.toPercent(ti, length, this.handset.index);
+                                this.pinkyPct = this.handset.pinky.loadPercent = this.toPercent(tp, length, this.handset.pinky);
+                             console.log(this.thumbPct);
                             }
 
                         }
-                    }, () => setTimeout(this.ngOnInit, 1000));
-                this.cordova.native.serial.writeHex("AA0200008B2A", this.ping, () => setTimeout(this.ngOnInit, 1000));
+                    }, () => setTimeout(this.init, 1000));
+                this.cordova.native.serial.writeHex("AA0200008B2A", this.ping, () => setTimeout(this.init, 1000));
             }, () => {
-                setTimeout(this.ngOnInit, 1000);
+                setTimeout(this.init, 1000);
             });
         }, () => {
-            setTimeout(this.ngOnInit, 1000);
+            setTimeout(this.init, 1000);
         });
     };
 
