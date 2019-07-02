@@ -4,11 +4,18 @@ import { CordovaService } from './cordova.service';
 @Injectable()
 export class HandsetService {
 
-  cordova: CordovaService;
+  public cordova: CordovaService;
 
   constructor(cordova: CordovaService) {
     this.cordova = cordova;
+    this.init();
   }
+
+  @Output() indexPct = new EventEmitter<Number>();
+  
+  @Output() thumbPct = new EventEmitter<Number>();
+  
+  @Output() pinkyPct = new EventEmitter<Number>();
 
   @Output() dataAvailable = new EventEmitter<any>();
   
@@ -63,6 +70,9 @@ export class HandsetService {
                                 this.handset.index.loadPercent = this.toPercent(ti, length, this.handset.index);
                                 this.handset.pinky.loadPercent = this.toPercent(tp, length, this.handset.pinky);
                                 this.dataAvailable(this.handset);
+                                this.indexPct(this.handset.index.loadPercent);
+                                this.thumbPct(this.handset.thumb.loadPercent);
+                                this.pinkyPct(this.handset.pinky.loadPercent);
                             }
 
                         }
@@ -76,7 +86,7 @@ export class HandsetService {
         });
     };
 
-    public handset = {
+    handset: any = {
         serial: "Not Connected",
         index: {
             id: 1,

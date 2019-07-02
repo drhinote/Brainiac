@@ -13,6 +13,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './services/auth.guard';
 import { DataService } from './services/data.service';
 import { CordovaService } from './services/cordova.service';
+import { HandsetService } from './services/handset.service';
 import { BrowserPersistenceService } from './services/browser-persistence.service';
 import { SyncService } from './services/sync.service';
 
@@ -25,6 +26,6 @@ const appRoutes: Routes = [
   imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, HttpClientModule, ReactiveFormsModule, MaterialModule, CommonModule ],
   declarations: [ AppComponent, HomeComponent, LoginComponent, HomeComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [AuthGuard, DataService, CordovaService, BrowserPersistenceService, SyncService ]
+  providers: [AuthGuard, DataService, CordovaService, BrowserPersistenceService, SyncService, HandsetService ]
 })
 export class AppModule { }

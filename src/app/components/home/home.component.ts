@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { Entity } from '../../interfaces/entity';
 import { DataService } from '../../services/data.service';
+import { HandsetService } from '../../services/handset.service';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -12,11 +13,12 @@ import { MatTableDataSource } from '@angular/material/table';
 export class HomeComponent implements OnInit {
 
   data: DataService;
+  public handset: HandsetService;
   selected: Entity;
 
-  constructor(data: DataService) {
-    this.data = data;
-    
+  constructor(data: DataService, handset: HandsetService) {
+    this.data = data;    
+    this.handset = handset;
   }
 
   displayedColumns: string[] = ['Name', 'Dob', 'Social', 'OpId', 'UuId'];
