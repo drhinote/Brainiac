@@ -13,12 +13,13 @@ import { MatTableDataSource } from '@angular/material/table';
 export class HomeComponent implements OnInit {
 
   data: DataService;
-  handset: HandsetService;
+  handset: any;
   selected: Entity;
 
-  constructor(data: DataService, handset: HandsetService) {
+  constructor(data: DataService) {
     this.data = data;    
-    this.handset = handset;
+    this.handset = new HandsetService();
+   
   }
 
   displayedColumns: string[] = ['Name', 'Dob', 'Social', 'OpId', 'UuId'];
@@ -34,7 +35,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.data.Subjects.getAll());
     this.dataSource.sort = this.sort;
-    this.handset.init();
+     this.handset.data.init();
   }
 
   public selectSubject(subject: Entity) {

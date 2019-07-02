@@ -8,9 +8,9 @@
 <button padding="10" color="primary" mat-raised-button>Refresh all data</button>
 </td>
 
-<td><mat-spinner diameter="20" mode="determinate" value="{{ handset.indexPct | async }}"></mat-spinner></td>
-<td><mat-spinner diameter="20" mode="determinate" value="{{ handset.thumbPct | async }}"></mat-spinner></td>
-<td><mat-spinner diameter="20" mode="determinate" value="{{ handset.pinkyPct | async }}"></mat-spinner></td>
+<td><mat-spinner diameter="20" mode="determinate" value="{{ handset.data.indexPct }}"></mat-spinner></td>
+<td><mat-spinner diameter="20" mode="determinate" value="{{ handset.data.thumbPct }}"></mat-spinner></td>
+<td><mat-spinner diameter="20" mode="determinate" value="{{ handset.data.pinkyPct }}"></mat-spinner></td>
 </tr></table>
 
 <mat-card *ngIf="selected">
