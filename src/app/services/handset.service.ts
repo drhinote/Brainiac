@@ -14,8 +14,8 @@ import {Observable} from 'rxjs';
     }
 
     function populateFinger(finger, data, idx, isPadded) {
-        finger.offset = fix(data[idx] * 65536 + data[idx + 1] * 256 + data[idx + 2]);
-        finger.max = fix(data[idx + 9] * 65536 + data[idx + 10] * 256 + data[idx + 11]);
+        finger.offset = fix(data.charCodeAt(idx) * 65536 + data.charCodeAt(idx + 1) * 256 + data.charCodeAt(idx + 2));
+        finger.max = fix(data.charCodeAt(idx + 9) * 65536 + data.charCodeAt(idx + 10) * 256 + data.charCodeAt(idx + 11));
     }
 
     var handsetData = {
@@ -65,31 +65,31 @@ function Handset() {
             this.cordova.native.serial.open({ baudRate: 460800 }, () => {
                 this.cordova.native.serial.registerReadCallback(
                     function success(data) {
-                        var view = data;
-                        if (view[1] === 2) {
-                            if (view[7] > 76) {
+                        var view: string = data;
+                        if (view.charCodeAt(1) === 2) {
+                            if (view.charCodeAt(7) > 76) {
                               
-                                populateFinger(handsetData.thumb, view, 8, view[7] == 78);
-                                populateFinger(handsetData.index, view, 11, view[7] == 78);
-                                populateFinger(handsetData.pinky, view, 14, view[7] == 78);
-                                if (view[7] > 77) {
+                                populateFinger(handsetData.thumb, view, 8, view.charCodeAt(7) == 78);
+                                populateFinger(handsetData.index, view, 11, view.charCodeAt(7) == 78);
+                                populateFinger(handsetData.pinky, view, 14, view.charCodeAt(7) == 78);
+                                if (view.charCodeAt(7) > 77) {
                                     var t = "";
-                                    for (var j = 26; view[j] !== 0; j++)
-                                        t += String.fromCharCode(view[j]);
+                                    for (var j = 26; view.charCodeAt(j) !== 0; j++)
+                                        t += String.fromCharCode(view.charCodeAt(j));
                                     handsetData.serial = t;
                                 }
                             }
                         }
-                        if (view[1] === 3) {
-                            var length = (view[3] + view[4] * 256) / 9;
+                        if (view.charCodeAt(1) === 3) {
+                            var length = (view.charCodeAt(3) + view.charCodeAt(4) * 256) / 9;
                             if (length > 0) {
                                 var tt = 0;
                                 var ti = 0;
                                 var tp = 0;
                                 for (var i = 7; i < length * 9; i += 9) {
-                                    var ts = fix(view[i] + view[i + 1] * 256 + view[i + 2] * 65536);
-                                    var ish = fix(view[i + 3] + view[i + 4] * 256 + view[i + 5] * 65536);
-                                    var ps = fix(view[i + 6] + view[i + 7] * 256 + view[i + 8] * 65536);
+                                    var ts = fix(view.charCodeAt(i) + view.charCodeAt(i + 1) * 256 + view.charCodeAt(i + 2) * 65536);
+                                    var ish = fix(view.charCodeAt(i + 3) + view.charCodeAt(i + 4) * 256 + view.charCodeAt(i + 5) * 65536);
+                                    var ps = fix(view.charCodeAt(i + 6) + view.charCodeAt(i + 7) * 256 + view.charCodeAt(i + 8) * 65536);
                                     tt += ts;
                                     ti += ish;
                                     tp += ps;
