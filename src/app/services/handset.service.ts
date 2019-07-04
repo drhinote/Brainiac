@@ -1,8 +1,12 @@
 import { CordovaService } from './cordova.service';
 import {Observable} from 'rxjs';
 
-    function fix(val) {
-      return val-(Math.floor(val/8388608)*16777216);
+    function fix(curr) {
+      if (curr > 8388607)  // 8388607 = 2^23-1
+            {
+                return curr - 16777216;   // 16777216 = 2^24
+            }
+            return curr;
     }
 
     function addSample(sample, finger) {
@@ -14,8 +18,8 @@ import {Observable} from 'rxjs';
     }
 
     function populateFinger(finger, data, idx, isPadded) {
-        finger.offset = fix(data.charCodeAt(idx) * 65536 + data.charCodeAt(idx + 1) * 256 + data.charCodeAt(idx + 2));
-        finger.max = fix(data.charCodeAt(idx + 9) * 65536 + data.charCodeAt(idx + 10) * 256 + data.charCodeAt(idx + 11));
+        finger.offset = fix((data.charCodeAt(idx) * 65536 + data.charCodeAt(idx + 1) * 256 + data.charCodeAt(idx + 2))-8388607);
+        finger.max = fix((data.charCodeAt(idx + 9) * 65536 + data.charCodeAt(idx + 10) * 256 + data.charCodeAt(idx + 11))-8388607);
     }
 
     var handsetData = {
@@ -57,7 +61,7 @@ function Handset() {
   this.pinkyPct = 0;
 
   this.ping = () => {  
-                this.cordova.native.serial.writeHex("AA0300002940", () => setTimeout(handsetInstance.ping), () => setTimeout(handsetInstance.init, 1000));
+    this.cordova.native.serial.writeHex("AA0300002940",() => {}, () => setTimeout(handsetInstance.init, 1000));
   };
   
  this.init = () => {
@@ -87,9 +91,9 @@ function Handset() {
                                 var ti = 0;
                                 var tp = 0;
                                 for (var i = 7; i < length * 9; i += 9) {
-                                    var ts = fix(view.charCodeAt(i) + view.charCodeAt(i + 1) * 256 + view.charCodeAt(i + 2) * 65536);
-                                    var ish = fix(view.charCodeAt(i + 3) + view.charCodeAt(i + 4) * 256 + view.charCodeAt(i + 5) * 65536);
-                                    var ps = fix(view.charCodeAt(i + 6) + view.charCodeAt(i + 7) * 256 + view.charCodeAt(i + 8) * 65536);
+                                    var ts = fix(view.charCodeAt(i) + view.charCodeAt(i + 1) * 256 + (view.charCodeAt(i + 2)) * 65536);
+                                    var ish = fix(view.charCodeAt(i + 3) + view.charCodeAt(i + 4) * 256 + (view.charCodeAt(i + 5)) * 65536);
+                                    var ps = fix(view.charCodeAt(i + 6) + view.charCodeAt(i + 7) * 256 + (view.charCodeAt(i + 8)) * 65536);
                                     tt += ts;
                                     ti += ish;
                                     tp += ps;
@@ -104,10 +108,10 @@ function Handset() {
                                 handsetInstance.pinkyPct = Math.min(Math.max(handsetData.pinky.loadPercent = parseInt(toPercent(tp, length, handsetData.pinky)),0),100);
                                 
                             }
-
                         }
+                        setTimeout(handsetInstance.ping);
                     }, () => setTimeout(handsetInstance.init, 1000));
-                this.cordova.native.serial.writeHex("AA0200008B2A", handsetInstance.ping, () => setTimeout(handsetInstance.init, 1000));
+                  this.cordova.native.serial.writeHex("AA0200008B2A", () => {}, () => setTimeout(handsetInstance.init, 1000));
             }, () => {
                 setTimeout(this.init, 1000);
             });

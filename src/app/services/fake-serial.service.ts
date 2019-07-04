@@ -13,16 +13,16 @@ export class FakeSerialService {
   writeHex(data: string, onSuccess: Function, onFail: Function) {
   
 
-  
+    onSuccess();
     if(data == "AA0200008B2A") {
-      this.dataAvailable(cvrt("qgIAgADYME9/CqiBZAqAxq+X/Iidunqdpj9TLTE4TS1BMDA2NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
+      setTimeout(this.dataAvailable(cvrt("qgIAgADYME9/CqiBZAqAxq+X/Iidunqdpj9TLTE4TS1BMDA2NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
+    
     } else {
       var output = cvrt(samples[idx]);
       idx++;
       if(idx >= samples.length) idx = 0;
-      setTimeout(() => this.dataAvailable(output), output.length);
+      setTimeout(() => this.dataAvailable(output), output.length/9);      
     }
-    onSuccess();
   }
 
   requestPermission(onSuccess: Function, onFail: Function) {
