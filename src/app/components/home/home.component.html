@@ -1,11 +1,18 @@
 <mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+  <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="searchValue" placeholder="Search">
+  <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+    <mat-icon>close</mat-icon>
+  </button>
 </mat-form-field>
 <table><tr>
   <td>
-<button padding="10" color="accent" mat-raised-button>Add Patient</button>
-<button padding="10" color="accent" mat-raised-button>Manage Testers</button>
-<button padding="10" color="primary" mat-raised-button>Refresh all data</button>
+<button color="accent" (click)="addSubject()" mat-raised-button>Add Patient</button>
+&nbsp;
+<button color="accent" mat-raised-button>Manage Testers</button>
+&nbsp;
+<button color="primary" mat-raised-button>Refresh all data</button>
+&nbsp
+<mat-button-toggle color="warning" [(ngModel)]="showall" mat-raised-button>{{ showall?"Hide All":"Show All" }}</mat-button-toggle>
 </td>
 
 <td><mat-spinner diameter="20" mode="determinate" value="{{ handset.data.indexPct }}"></mat-spinner></td>
@@ -14,7 +21,7 @@
 </tr></table>
 
 <mat-card *ngIf="selected">
- <table> <tr> <td>{{ selected.Name }}</td> <td>{{ selected.OpId }}</td><td> {{ selected.UuId }}</td> <td><button color="primary" mat-button>Edit</button></td> <td><button color="warn" mat-raised-button>Begin Test</button></td></tr>
+ <table> <tr> <td>{{ selected.Name }}</td> <td>{{ selected.OpId }}</td><td> {{ selected.UuId }}</td> <td><button color="primary" (click)="editSubject(selected)"  mat-button>Edit</button></td> <td><button color="warn" mat-raised-button>Begin Test</button></td></tr>
  </table> 
 </mat-card>
 

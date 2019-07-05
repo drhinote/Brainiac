@@ -4,6 +4,8 @@ import { Entity } from '../../interfaces/entity';
 import { DataService } from '../../services/data.service';
 import { HandsetService } from '../../services/handset.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SubjectComponent } from '../subject/subject.component';
 
 @Component({
   selector: 'app-home',
@@ -12,14 +14,32 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class HomeComponent implements OnInit {
 
-  data: DataService;
   handset: any;
   selected: Entity;
+  showall: boolean;
+  searchValue: string;
 
-  constructor(data: DataService) {
-    this.data = data;    
-    this.handset = new HandsetService();
-   
+  constructor(private data: DataService, private dialog: MatDialog, ) {
+    this.handset = new HandsetService();  
+  }
+
+  addSubject(): void {
+    const dialogRef = this.dialog.open(SubjectComponent, {
+      width: '250px',
+      data: { }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.selected = result;
+      this.applyFilter(this.selected['UuId']);
+    });
+  }
+
+   editSubject(): void {
+    const dialogRef = this.dialog.open(SubjectComponent, {
+      width: '250px',
+      data: this.selected
+    });
   }
 
   displayedColumns: string[] = ['Name', 'Dob', 'Social', 'OpId', 'UuId'];

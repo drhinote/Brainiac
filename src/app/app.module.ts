@@ -16,6 +16,7 @@ import { CordovaService } from './services/cordova.service';
 import { HandsetService } from './services/handset.service';
 import { BrowserPersistenceService } from './services/browser-persistence.service';
 import { SyncService } from './services/sync.service';
+import { SubjectComponent } from './components/subject/subject.component';
 
 const appRoutes: Routes = [  
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
@@ -24,7 +25,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, HttpClientModule, ReactiveFormsModule, MaterialModule, CommonModule ],
-  declarations: [ AppComponent, HomeComponent, LoginComponent, HomeComponent ],
+  declarations: [ AppComponent, HomeComponent, LoginComponent, HomeComponent, SubjectComponent ],
+  entryComponents: [SubjectComponent],
   bootstrap:    [ AppComponent ],
   providers: [AuthGuard, DataService, CordovaService, BrowserPersistenceService, SyncService, HandsetService ]
 })

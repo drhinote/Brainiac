@@ -1,0 +1,23 @@
+<h1 mat-dialog-title *ngIf="data.UuId">Edit Patient Info</h1>
+<h1 mat-dialog-title *ngIf="!data.UuId">Add Patient</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.Name" placeholder="Name: Last, First MI">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="date" [(ngModel)]="data.Dob" placeholder="Date of Birth">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number"  maxlength="4" [(ngModel)]="data.Social" placeholder="Last 4 of Social">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.OpId" placeholder="Alternate Id">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.UuId">
+    <input matInput disabled [(ngModel)]="data.UuId">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button (click)="ok()" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
